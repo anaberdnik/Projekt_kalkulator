@@ -1,0 +1,6 @@
+#Projektna naloga pri predmetu Uvod v programiranje
+##Projekt: Kalkulator
+
+Kalkulator z (sedaj še) osnovnimi funkcijami
+
+*5.6.2017*, **Ljubljana**
