@@ -1,5 +1,62 @@
 from tkinter import *
 
+def pretvori_niz(niz):
+    rezultat=''
+    znotraj_korena = False
+    stevilo='0123456789'
+    stevilo_oklepajev=0
+    
+    for x in niz:
+        if x == '√':
+            znotraj_korena = True
+
+            koren=niz.index(x)
+            if koren==0:
+                rezultat += '('
+            elif niz[koren-1] in stevilo:
+                rezultat += '*('
+            else:
+                rezultat += '('
+
+        elif x == '(' and znotraj_korena == True:
+            rezultat += '('
+            stevilo_oklepajev += 1
+
+        elif x == ')' and znotraj_korena == True:
+            if stevilo_oklepajev > 1:
+                rezultat += ')'
+                stevilo_oklepajev -= 1
+            elif stevilo_oklepajev == 1:
+                stevilo_oklepajev -= 1
+                rezultat += ')**(1/2))'
+                znotraj_korena = False
+
+        elif x == '%' and znotraj_korena == True:
+            if stevilo_oklepajev == 0:
+                rezultat += '%' + '**(1/2)'
+                znotraj_korena = False
+            else:
+                rezultat += '%' 
+                
+        elif x in stevilo and znotraj_korena == True:
+            rezultat += x
+            
+        elif x not in stevilo and znotraj_korena==True:
+            if stevilo_oklepajev == 0:
+                znotraj_korena=False
+                rezultat += ')'+'**(1/2)'+x
+            else:
+                rezultat += x
+                
+        else:
+            rezultat+=x
+    if znotraj_korena == True:
+        return rezultat + ')'+'**(1/2)'
+    else:
+        return rezultat
+            
+            
+
 class kalkulator:
 
     def __init__(self):
@@ -19,7 +76,7 @@ class kalkulator:
         self.string=StringVar()
 
         e=Entry(okno,textvariable=self.string, width=30,
-                bd=10,bg='light grey', justify=RIGHT, font='Helvetica 15 bold')
+                bd=10,bg='white', justify=RIGHT, font='Helvetica 15 bold')
         e.grid(row=0, columnspan=6)
         e.bind('<KeyPress>', self.keyPress)
         e.focus()
@@ -50,7 +107,7 @@ class kalkulator:
         Button(okno,text="(",width=5,height=2, command=lambda:self.dodaj_vrednost('(')).grid(row=1, column=3, sticky='NWNESWSE')
         Button(okno,text=")",width=5,height=2, command=lambda:self.dodaj_vrednost(')')).grid(row=1, column=4, sticky='NWNESWSE')
         Button(okno,text="√",width=5,height=2, command=lambda:self.dodaj_vrednost('√')).grid(row=2, column=3, sticky='NWNESWSE')
-        Button(okno,text="^",width=5,height=2, command=lambda:self.dodaj_vrednost('**')).grid(row=2, column=4, sticky='NWNESWSE')
+        Button(okno,text="^",width=5,height=2, command=lambda:self.dodaj_vrednost('^')).grid(row=2, column=4, sticky='NWNESWSE')
 
         #z opcijo sticky lahko lepo razporedimo gumbe; 'NWNESWSE' so smeri neba
 
@@ -70,15 +127,27 @@ class kalkulator:
         if(not self.error):
             self.string.set(self.string.get()[0:-1])
 
+    
+
     def enačaj(self):
         #začetni rezultat bo postavljen na nič, operacijo bomo postavili na try
         #poskušal bo ovrednotiti niz, če mu ne bo uspelo, vrne napako Error
         #pomagamo si s funkcijo Eval
         #Eval() evaluates the passed string as a Python expression and returns the result
-        rezultat=''
 
+        rezultat=''
+        vpisano = self.string.get()
+        if '√' in vpisano:
+            vpisano = pretvori_niz(vpisano)
+
+        if '^' in vpisano:
+            vpisano= vpisano.replace('^', '**')
+
+        if '%' in vpisano:
+            vpisano = vpisano.replace('%','*0.01')
+            
         try:
-            rezultat=eval(self.string.get())
+            rezultat=eval(vpisano)
         except:
             self.error=True
             rezultat='Error'
