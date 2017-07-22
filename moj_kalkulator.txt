@@ -1,6 +1,21 @@
 #Projektna naloga pri predmetu Uvod v programiranje
 ##Projekt: Kalkulator
 
-Kalkulator z (sedaj še) osnovnimi funkcijami
+Ustvarjen kalulator, ki razume naslednje funkcije:
+- *seštevanje*,
+- *odštevanje*,
+- *množenje*,
+- *deljenje*,
+- *korenjenje* in
+- *potenciranje*.
 
-*5.6.2017*, **Ljubljana**
+Prav tako razume matematične izraze, ki vsebujejo *odstotke*;
+definirajo se lahko necela števila,
+prednost računanja pa lahko določimo z *oklepaji*.
+
+Izraz lahko kadarkoli v *celoti izbrišemo*,
+ali pa odstranimo le zadnji element.
+
+
+**22.7.2017, Ljubljana**
+**Ana Berdnik**
