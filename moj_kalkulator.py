@@ -15,6 +15,8 @@ def pretvori_niz(niz):
                 rezultat += '('
             elif niz[koren-1] in stevilo:
                 rezultat += '*('
+            elif niz[koren-1] == '%':
+                rezultat += '*('
             else:
                 rezultat += '('
 
@@ -33,12 +35,16 @@ def pretvori_niz(niz):
 
         elif x == '%' and znotraj_korena == True:
             if stevilo_oklepajev == 0:
-                rezultat += '%' + '**(1/2)'
+                rezultat += ')**(1/2)' + '%'
+                
                 znotraj_korena = False
             else:
                 rezultat += '%' 
                 
         elif x in stevilo and znotraj_korena == True:
+            rezultat += x
+
+        elif x == '.' and znotraj_korena == True:
             rezultat += x
             
         elif x not in stevilo and znotraj_korena==True:
