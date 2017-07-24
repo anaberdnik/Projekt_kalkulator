@@ -55,7 +55,7 @@ def pretvori_niz(niz):
                 rezultat += x
                 
         else:
-            rezultat+=x
+            rezultat += x
     if znotraj_korena == True:
         return rezultat + ')'+'**(1/2)'
     else:
