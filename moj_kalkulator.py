@@ -141,7 +141,7 @@ class kalkulator:
         #pomagamo si s funkcijo Eval
         #Eval() evaluates the passed string as a Python expression and returns the result
 
-        rezultat=''
+        rezultat = ''
         vpisano = self.string.get()
         if '√' in vpisano:
             vpisano = pretvori_niz(vpisano)
